@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Job Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Session["login"].ToString() == "0")
+                {
+                    <ul class="nav navbar-nav">
+
+
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("UserSignUp","User")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="@Url.Action("UserLogin","User")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                }
+
+                @*If the login is by user*@
+                else if (Session["login"].ToString() == "1" && Session["User"].ToString() != "0")
+                {
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Upload Resume", "ResumeUpload", "Resume")</li>
+                <li>@Html.ActionLink("View Applied Places", "ViewAppliedPlaces", "User")</li>
+                <li>@Html.ActionLink("Apply for Job", "JobApply", "User")</li>
+            </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("UserLogout","User")"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                }
+
+                @*If the login is by Employer*@
+                else if (Session["login"].ToString() == "1" && Session["Employer"].ToString() != "0")
+                {
+
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("View Resumes", "ViewResumes", "Employer")</li>
+                <li>@Html.ActionLink("Add New Jobs", "CreateJob", "Employer")</li>
+                <li>@Html.ActionLink("View Job Applicants", "job_applicant", "Employer")</li>
+                <li>@Html.ActionLink("Resume Suggester", "ResumeSuggestion", "Employer")</li>
+            </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("EmployerLogout","Employer")"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+
+</html>
